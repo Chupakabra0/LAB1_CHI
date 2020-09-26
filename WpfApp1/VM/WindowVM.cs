@@ -1,27 +1,40 @@
-﻿using System;
-using System.Windows;
+﻿using System.Globalization;
 using System.Windows.Input;
+using org.mariuszgromada.math.mxparser;
 using OxyPlot;
-using OxyPlot.Axes;
 using OxyPlot.Series;
 using WpfApp1.Basic;
-using WpfApp1.Logic;
 
 namespace WpfApp1.VM {
     public class WindowVM : BaseVM {
         public WindowVM() {
+            CultureInfo.CurrentCulture = new CultureInfo("US-en");
             this.Model = new PlotModel { Title = "YEAH!", Subtitle = "YES!", Series = { new AreaSeries() }};
-            var r = new MethodRungeCutt(0.0, 2.0, 0.5, (x, y) => 0.9 * x * y + 3.5 * y - 2.1);
-            MessageBox.Show($"{r.ChooseEpsilon()}");
         }
 
-        public ICommand Magic => new RelayCommand(obj => {
-            this.Function = v => Math.Sin(v) * 3.0 - 1.0;
-            this.Model.Series.Add(new FunctionSeries(this.Function, 0.0, 5.0, 0.01, "It's perfect!"));
+        public ICommand Magic => new RelayCommand( obj => {
+            this.Model.Series.Add(this.CreateLine());
             this.Model.InvalidatePlot(true);
         });
 
-        public PlotModel            Model { get; set; }
-        public Func<double, double> Function;
+        public  PlotModel Model          { get; set; }
+        public  string    FunctionString { get; set; }
+        private Function  Function       => new Function($"F(x, y) = {this.FunctionString}");
+
+        private LineSeries CreateLine() {
+            var result = new LineSeries();
+
+            for (var x = 0.0; x < 10.0; x += 0.1) {
+                for (var y = 0.0; y < 10.0; y += 0.1) {
+                    var expression = new Expression($"F({x}, {y})", this.Function);
+                    var point      = new DataPoint(x, expression.calculate());
+                    if (!result.Points.Contains(point)) {
+                        result.Points.Add(point);
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }
