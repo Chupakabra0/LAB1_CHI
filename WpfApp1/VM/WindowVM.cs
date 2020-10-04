@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Windows.Input;
 using org.mariuszgromada.math.mxparser;
 using OxyPlot;
@@ -9,7 +10,8 @@ namespace WpfApp1.VM {
     public class WindowVM : BaseVM {
         public WindowVM() {
             CultureInfo.CurrentCulture = new CultureInfo("US-en");
-            this.Model = new PlotModel { Title = "YEAH!", Subtitle = "YES!", Series = { new AreaSeries() }};
+            var series = new AreaSeries();
+            this.Model = new PlotModel { Title = "YEAH!", Subtitle = "YES!", Series = {series} };
         }
 
         public ICommand Magic => new RelayCommand( obj => {
@@ -17,15 +19,24 @@ namespace WpfApp1.VM {
             this.Model.InvalidatePlot(true);
         });
 
-        public  PlotModel Model          { get; set; }
-        public  string    FunctionString { get; set; }
-        private Function  Function       => new Function($"F(x, y) = {this.FunctionString}");
+        public PlotModel Model          { get; set; }
+        public string    FunctionString { get; set; }
+        public string    AString        { get; set; }
+        public string    BString        { get; set; }
+        public string    X0String       { get; set; }
+        public string    Y0String       { get; set; }
+
+        private Function Function => new Function($"F(x, y) = {this.FunctionString}");
+        private double   A        => Convert.ToDouble(this.AString);
+        private double   B        => Convert.ToDouble(this.BString);
+        private double   X0       => Convert.ToDouble(this.X0String);
+        private double   Y0       => Convert.ToDouble(this.Y0String);
 
         private LineSeries CreateLine() {
             var result = new LineSeries();
 
-            for (var x = 0.0; x < 10.0; x += 0.1) {
-                for (var y = 0.0; y < 10.0; y += 0.1) {
+            for (var x = this.A; x <= this.B; x += 0.05) {
+                for (var y = this.A; y <= this.B; y += 0.05) {
                     var expression = new Expression($"F({x}, {y})", this.Function);
                     var point      = new DataPoint(x, expression.calculate());
                     if (!result.Points.Contains(point)) {
