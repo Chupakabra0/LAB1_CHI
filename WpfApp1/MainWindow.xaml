@@ -12,19 +12,53 @@
         <vm:WindowVM></vm:WindowVM>
     </Window.DataContext>
 
-    <Grid Margin="10" VerticalAlignment="Center">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <oxy:PlotView Model="{Binding Model, IsAsync=True, Mode=OneWay}" Height="300"></oxy:PlotView>
-        </Grid>
-        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"
-              Margin="0, 10" Orientation="Horizontal">
-            <Button Content="Press it to magic" Padding="5" Command="{Binding Magic}"></Button>
-            <TextBox Width="100" Margin="10, 0" Text="{Binding FunctionString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        </StackPanel>
-    </Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Margin="10" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <oxy:PlotView Model="{Binding Model, IsAsync=True, Mode=OneWay}" Height="300"
+                              FontSize="18"></oxy:PlotView>
+            </Grid>
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                  Margin="0, 10" Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    
+                    <Button Content="Press it to magic" Padding="10" FontSize="16"
+                            Command="{Binding Magic}"></Button>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                   Text="F(x, y) ="></TextBlock>
+                        <TextBox Style="{StaticResource DefaultTextBox}" MinWidth="100"
+                                 Text="{Binding FunctionString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
 
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                   Text="A ="></TextBlock>
+                        <TextBox Style="{StaticResource DefaultTextBox}"
+                                 Text="{Binding AString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                   Text="B ="></TextBlock>
+                        <TextBox Style="{StaticResource DefaultTextBox}"
+                                 Text="{Binding BString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                   Text="X0 = "></TextBlock>
+                        <TextBox Style="{StaticResource DefaultTextBox}"
+                                 Text="{Binding X0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock Style="{StaticResource DefaultTextBlock}" Text="Y0 = "></TextBlock>
+                        <TextBox Style="{StaticResource DefaultTextBox}"
+                                 Text="{Binding Y0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Window>
