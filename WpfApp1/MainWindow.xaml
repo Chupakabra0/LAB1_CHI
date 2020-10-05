@@ -6,7 +6,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:vm="clr-namespace:WpfApp1.VM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800">
 
     <Window.DataContext>
         <vm:WindowVM></vm:WindowVM>
@@ -17,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <oxy:PlotView Model="{Binding Model, IsAsync=True, Mode=OneWay}" Height="300"
@@ -25,9 +26,6 @@
             <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"
                   Margin="0, 10" Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    
-                    <Button Content="Press it to magic" Padding="10" FontSize="16"
-                            Command="{Binding Magic}"></Button>
                     
                     <StackPanel Orientation="Horizontal" Margin="10">
                         <TextBlock Style="{StaticResource DefaultTextBlock}"
@@ -38,13 +36,13 @@
 
                     <StackPanel Orientation="Horizontal" Margin="10">
                         <TextBlock Style="{StaticResource DefaultTextBlock}"
-                                   Text="A ="></TextBlock>
+                                   Text="H ="></TextBlock>
                         <TextBox Style="{StaticResource DefaultTextBox}"
-                                 Text="{Binding AString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                 Text="{Binding HString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         <TextBlock Style="{StaticResource DefaultTextBlock}"
                                    Text="B ="></TextBlock>
                         <TextBox Style="{StaticResource DefaultTextBox}"
-                                 Text="{Binding BString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                 Text="{Binding LimitString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="10">
@@ -59,6 +57,10 @@
 
                 </StackPanel>
             </StackPanel>
+
+            <Button Grid.Row="2" Content="Press it to magic" Padding="10"
+                    FontSize="16" Command="{Binding Magic}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
         </Grid>
     </ScrollViewer>
 </Window>
