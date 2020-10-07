@@ -75,7 +75,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Logic\FunctionBuilder.cs" />
-    <Compile Include="Logic\MethodRunge.cs" />
+    <Compile Include="Logic\RK3.cs" />
+    <Compile Include="Logic\RK4.cs" />
     <Compile Include="VM\WindowVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

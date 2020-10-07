@@ -19,8 +19,11 @@ namespace WpfApp1.VM {
             new RelayCommand(obj => {
                 this.FunctionDots = CreateFunctionTuples();
                 this.IntegralDots = CreateIntegralTuples();
+                this.ExactDots = CreateExactTuples();
+                this.Model.Series.Clear();
                 this.Model.Series.Add(this.CreateLine(this.FunctionDots, OxyColor.FromRgb(0, 255, 0), "Function"));
                 this.Model.Series.Add(this.CreateLine(this.IntegralDots, OxyColor.FromRgb(0, 0, 255), "Integral"));
+                this.Model.Series.Add(this.CreateLine(this.ExactDots, OxyColor.FromRgb(255, 0, 0), "Exact"));
                 this.Model.InvalidatePlot(true);
             });
 
@@ -34,6 +37,7 @@ namespace WpfApp1.VM {
 
         public ObservableCollection<Tuple<double, double>> FunctionDots;
         public ObservableCollection<Tuple<double, double>> IntegralDots;
+        public ObservableCollection<Tuple<double, double>> ExactDots;
 
         private Function Function => new Function($"F(x, y) = {this.FunctionString}");
 
@@ -48,6 +52,8 @@ namespace WpfApp1.VM {
         private ObservableCollection<Tuple<double, double>> CreateFunctionTuples() => new ObservableCollection<Tuple<double, double>>(new FunctionBuilder(this.X0, this.Limit, this.X0, this.Limit, this.H, this.FunctionString).Build());
 
         private ObservableCollection<Tuple<double, double>> CreateIntegralTuples() => new ObservableCollection<Tuple<double, double>>(new RK3(this.X0, this.Y0, this.Limit, this.H, this.Func).Calculate(this.IsAuto));
+        
+        private ObservableCollection<Tuple<double, double>> CreateExactTuples() => new ObservableCollection<Tuple<double, double>>(new RK4(this.X0, this.Y0, this.Limit, this.H, this.Func).Calculate(this.IsAuto));
 
         private LineSeries CreateLine(ObservableCollection<Tuple<double, double>> dotsList, OxyColor color, string title) {
             var line     = new LineSeries { Color = color, Title = title };

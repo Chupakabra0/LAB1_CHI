@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using OxyPlot;
 
 namespace WpfApp1.Logic {
     public class RK3 {
@@ -45,7 +44,7 @@ namespace WpfApp1.Logic {
         public       double Y     { get; set; }
         public       double H     { get; set; }
         public       double Limit { get; set; }
-        public const int    K        = 4;
+        public const int    K        = 3;
         public const double MAX_STEP = 1.0;
         public const double MIN_STEP = 0.01;
 
