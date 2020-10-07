@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Input;
 using org.mariuszgromada.math.mxparser;
@@ -11,22 +12,28 @@ namespace WpfApp1.VM {
     public class WindowVM : BaseVM {
         public WindowVM() {
             CultureInfo.CurrentCulture = new CultureInfo("US-en");
-            this.Model = new PlotModel { Title = "YEAH!", Subtitle = "YES!", Series = { new AreaSeries() } };
+            this.Model = new PlotModel { Title = "Lab #1", Subtitle = "Runge-Kutta's method", Series = { new AreaSeries() } };
         }
 
         public ICommand Magic =>
             new RelayCommand(obj => {
-                this.Model.Series.Add(this.CreateIntegralLine());
-                this.Model.Series.Add(this.CreateFunctionLine());
+                this.FunctionDots = CreateFunctionTuples();
+                this.IntegralDots = CreateIntegralTuples();
+                this.Model.Series.Add(this.CreateLine(this.FunctionDots, OxyColor.FromRgb(0, 255, 0), "Function"));
+                this.Model.Series.Add(this.CreateLine(this.IntegralDots, OxyColor.FromRgb(0, 0, 255), "Integral"));
                 this.Model.InvalidatePlot(true);
             });
 
         public PlotModel Model          { get; set; }
+        public bool      IsAuto         => true;
         public string    FunctionString { get; set; }
         public string    HString        { get; set; }
         public string    LimitString    { get; set; }
         public string    X0String       { get; set; }
         public string    Y0String       { get; set; }
+
+        public ObservableCollection<Tuple<double, double>> FunctionDots;
+        public ObservableCollection<Tuple<double, double>> IntegralDots;
 
         private Function Function => new Function($"F(x, y) = {this.FunctionString}");
 
@@ -38,32 +45,16 @@ namespace WpfApp1.VM {
         private double X0    => Convert.ToDouble(this.X0String);
         private double Y0    => Convert.ToDouble(this.Y0String);
 
-        private LineSeries CreateIntegralLine() {
-            var dotsList = new MethodRungeCutt(this.X0, this.Y0, this.Limit, this.H, this.Func).Execute();
-            var line     = new LineSeries();
+        private ObservableCollection<Tuple<double, double>> CreateFunctionTuples() => new ObservableCollection<Tuple<double, double>>(new FunctionBuilder(this.X0, this.Limit, this.X0, this.Limit, this.H, this.FunctionString).Build());
 
-            foreach (var dot in dotsList) {
-                line.Points.Add(dot);
+        private ObservableCollection<Tuple<double, double>> CreateIntegralTuples() => new ObservableCollection<Tuple<double, double>>(new RK3(this.X0, this.Y0, this.Limit, this.H, this.Func).Calculate(this.IsAuto));
+
+        private LineSeries CreateLine(ObservableCollection<Tuple<double, double>> dotsList, OxyColor color, string title) {
+            var line     = new LineSeries { Color = color, Title = title };
+
+            foreach (var (x, y) in dotsList) {
+                line.Points.Add(new DataPoint(x, y));
             }
-
-            line.Color = OxyColor.FromRgb(0, 0, 255);
-
-            return line;
-        }
-
-        private LineSeries CreateFunctionLine() {
-            var line = new LineSeries();
-
-            for (var x = this.X0; x <= this.Limit; x += this.H) {
-                for (var y = -50.0; y <= 50.0; y += this.H) {
-                    var point = new DataPoint(x, new Expression($"F({x}, {y})", this.Function).calculate());
-                    if (!line.Points.Contains(point)) {
-                        line.Points.Add(point);
-                    }
-                }
-            }
-
-            line.Color = OxyColor.FromRgb(0, 255, 0);
 
             return line;
         }
