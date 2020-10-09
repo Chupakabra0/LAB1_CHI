@@ -6,61 +6,81 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:vm="clr-namespace:WpfApp1.VM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800">
+        Title="MainWindow" Height="550" Width="800">
 
     <Window.DataContext>
         <vm:WindowVM></vm:WindowVM>
     </Window.DataContext>
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <Grid Margin="10" VerticalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <oxy:PlotView Model="{Binding Model, IsAsync=True, Mode=OneWay}" Height="300"
-                              FontSize="18"></oxy:PlotView>
-            </Grid>
-            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"
-                  Margin="0, 10" Orientation="Horizontal">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    
-                    <StackPanel Orientation="Horizontal" Margin="10">
-                        <TextBlock Style="{StaticResource DefaultTextBlock}"
-                                   Text="F(x, y) ="></TextBlock>
-                        <TextBox Style="{StaticResource DefaultTextBox}" MinWidth="100"
-                                 Text="{Binding FunctionString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TabControl>
+            <TabItem Header="Graphic" IsSelected="True">
+                <Grid Margin="10" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <oxy:PlotView Model="{Binding Model, IsAsync=True, Mode=OneWay}" Height="300" FontSize="18"></oxy:PlotView>
+                    </Grid>
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 10" Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="F(x, y) ="></TextBlock>
+                                <TextBox Style="{StaticResource DefaultTextBox}" MinWidth="100" Text="{Binding FunctionString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="X0 = "></TextBlock>
+                                <TextBox Style="{StaticResource DefaultTextBox}" Text="{Binding X0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="Y0 = "></TextBlock>
+                                <TextBox Style="{StaticResource DefaultTextBox}" Text="{Binding Y0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="Xn ="></TextBlock>
+                                <TextBox Style="{StaticResource DefaultTextBox}" Text="{Binding LimitString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="H ="></TextBlock>
+                                <TextBox Style="{StaticResource DefaultTextBox}"
+                                         Text="{Binding HString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="10">
-                        <TextBlock Style="{StaticResource DefaultTextBlock}"
-                                   Text="H ="></TextBlock>
-                        <TextBox Style="{StaticResource DefaultTextBox}"
-                                 Text="{Binding HString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <TextBlock Style="{StaticResource DefaultTextBlock}"
-                                   Text="B ="></TextBlock>
-                        <TextBox Style="{StaticResource DefaultTextBox}"
-                                 Text="{Binding LimitString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Margin="10">
+                        <Button Content="Press it to magic" FontSize="16" Command="{Binding Magic}" Padding="10"></Button>
+                        <CheckBox IsChecked="{Binding IsAuto, Mode=OneWayToSource}" Margin="0 5 0 0"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  Content="Is Auto"></CheckBox>
                     </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Table">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Horizontal">
 
-                    <StackPanel Orientation="Horizontal" Margin="10">
-                        <TextBlock Style="{StaticResource DefaultTextBlock}"
-                                   Text="X0 = "></TextBlock>
-                        <TextBox Style="{StaticResource DefaultTextBox}"
-                                 Text="{Binding X0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <TextBlock Style="{StaticResource DefaultTextBlock}" Text="Y0 = "></TextBlock>
-                        <TextBox Style="{StaticResource DefaultTextBox}"
-                                 Text="{Binding Y0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding IntegralDots, Mode=OneWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="X" Binding="{Binding Path=Item1, Mode=OneWay}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Y" Binding="{Binding Path=Item2, Mode=OneWay}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding ExactDots, Mode=OneWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="X" Binding="{Binding Path=Item1, Mode=OneWay}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Y" Binding="{Binding Path=Item2, Mode=OneWay}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
                     </StackPanel>
-
-                </StackPanel>
-            </StackPanel>
-
-            <Button Grid.Row="2" Content="Press it to magic" Padding="10"
-                    FontSize="16" Command="{Binding Magic}"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
-        </Grid>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
     </ScrollViewer>
 </Window>

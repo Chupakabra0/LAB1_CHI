@@ -36,9 +36,6 @@ namespace WpfApp1.Logic {
         public Func<double, double, double, double> CountK1   { get; }
         public Func<double, double, double, double> CountK2   { get; }
         public Func<double, double, double, double> CountK3   { get; }
-        public Func<double, double, double, double> CountK4   { get; }
-        public Func<double, double, double, double> CountK5   { get; }
-        public Func<double, double, double, double> CountK6   { get; }
 
         public       double X     { get; set; }
         public       double Y     { get; set; }
