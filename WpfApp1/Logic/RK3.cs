@@ -55,11 +55,8 @@ namespace WpfApp1.Logic {
                     currentH = this._Delta(this.Limit, currentX);
                 }
 
-                // Делаем обычный шаг
                 var stepNormH = this.CountFunc(currentX, currentY, currentH);
-                // Делаем половинный шаг
-                var stepHalfH = this.CountFunc(this._NextStep(currentX, halfH),
-                                               this.CountFunc(currentX, currentY, halfH), halfH);
+                var stepHalfH = this.CountFunc(this._NextStep(currentX, halfH), this.CountFunc(currentX, currentY, halfH), halfH);
 
                 var epsilonNormH = Math.Abs((stepHalfH - stepNormH) * Math.Pow(2, RK3.K) /
                                             (Math.Pow(2, RK3.K) - 1));

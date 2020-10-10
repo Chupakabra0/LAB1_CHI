@@ -74,8 +74,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logic\CheckSyntax.cs" />
     <Compile Include="Logic\ErrorBuilder.cs" />
     <Compile Include="Logic\FunctionBuilder.cs" />
+    <Compile Include="Logic\LineCreator.cs" />
     <Compile Include="Logic\RK3.cs" />
     <Compile Include="Logic\RK4.cs" />
     <Compile Include="VM\WindowVM.cs" />
