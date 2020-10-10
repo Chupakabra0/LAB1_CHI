@@ -23,12 +23,6 @@ namespace WpfApp1.Logic {
             this.CountK1   = (x, y, h) => h * this.Function(x, y);
             this.CountK2 = (x, y, h) => h * this.Function(this._NextStep(x, h / 3.0), this._NextStep(y, this.CountK1(x, y, h) / 3.0));
             this.CountK3 = (x, y, h) => h * this.Function(this._NextStep(x, 2.0 * h / 3.0), this._NextStep(y, 2.0 * this.CountK2(x, y, h) / 3.0));
-
-            //this.CountFunc = (x, y, h) => this.nextStep(y, h * (this.CountK1(x, y, h) + 2.0 * this.CountK2(x, y, h) + 2.0 * this.CountK3(x, y, h) + this.CountK4(x, y, h)) / 6.0);
-            //this.CountK1 = (x, y, h) => this.Function(x, y);
-            //this.CountK2 = (x, y, h) => this.Function(this.nextStep(x, 0.5 * h), this.nextStep(y, 0.5 * h * this.CountK1(x, y, h)));
-            //this.CountK3 = (x, y, h) => this.Function(this.nextStep(x, 0.5 * h), this.nextStep(y, 0.5 * h * this.CountK2(x, y, h)));
-            //this.CountK4 = (x, y, h) => this.Function(this.nextStep(x, h), this.nextStep(y, h * this.CountK3(x, y, h)));
         }
 
         public Func<double, double, double>         Function  { get; set; }

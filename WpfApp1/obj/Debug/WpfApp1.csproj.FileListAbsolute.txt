@@ -23,5 +23,3 @@ C:\Users\Александр Сафиюлин\Desktop\LAB1_CHI\WpfApp1\obj\Debug\
 C:\Users\Александр Сафиюлин\Desktop\LAB1_CHI\WpfApp1\obj\Debug\WpfApp1.csproj.Fody.CopyLocal.cache
 C:\Users\Александр Сафиюлин\Desktop\LAB1_CHI\WpfApp1\obj\Debug\Styles\Style.baml
 C:\Users\Александр Сафиюлин\Desktop\LAB1_CHI\WpfApp1\obj\Debug\App.baml
-C:\Users\Александр Сафиюлин\Desktop\LAB1_CHI\WpfApp1\obj\Debug\Table.g.cs
-C:\Users\Александр Сафиюлин\Desktop\LAB1_CHI\WpfApp1\obj\Debug\Table.baml

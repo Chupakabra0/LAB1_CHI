@@ -58,23 +58,34 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="Table">
+            <TabItem Header="Table" Visibility="{Binding TableVisibility, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding IntegralDots, Mode=OneWay}">
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"
+                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding IntegralDots, Mode=OneWay}"
+                                  VerticalContentAlignment="Center">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="X" Binding="{Binding Path=Item1, Mode=OneWay}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Y" Binding="{Binding Path=Item2, Mode=OneWay}"></DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding ExactDots, Mode=OneWay}">
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"
+                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding ExactDots, Mode=OneWay}"
+                                  VerticalContentAlignment="Center">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="X" Binding="{Binding Path=Item1, Mode=OneWay}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Y" Binding="{Binding Path=Item2, Mode=OneWay}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"
+                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding ErrorDots, Mode=OneWay}"
+                                  VerticalContentAlignment="Center">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="X" Binding="{Binding Path=Item1, Mode=OneWay}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Error" Binding="{Binding Path=Item2, Mode=OneWay}"></DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
 
