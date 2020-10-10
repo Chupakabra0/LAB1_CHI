@@ -1,12 +1,4 @@
-﻿<Window x:Class="WpfApp1.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:oxy="http://oxyplot.org/wpf"
-        xmlns:vm="clr-namespace:WpfApp1.VM"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="800">
+﻿<Window x:Class="WpfApp1.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:oxy="http://oxyplot.org/wpf" xmlns:vm="clr-namespace:WpfApp1.VM" mc:Ignorable="d" Title="MainWindow" Height="550" Width="800">
 
     <Window.DataContext>
         <vm:WindowVM></vm:WindowVM>
@@ -27,34 +19,25 @@
                     <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 10" Orientation="Horizontal">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                            <StackPanel Orientation="Horizontal" Margin="10">
-                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="F(x, y) ="></TextBlock>
-                                <TextBox Style="{StaticResource DefaultTextBox}" MinWidth="100" Text="{Binding FunctionString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <StackPanel Orientation="Horizontal" Margin="5, 0">
+                                <TextBox MinWidth="100" Style="{StaticResource DefaultTextBox}" Tag="F(x, y) =" Text="{Binding FunctionString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="5, 0">
+                                <TextBox Style="{StaticResource DefaultTextBox}" Tag="X0" Text="{Binding X0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <TextBox Style="{StaticResource DefaultTextBox}" Tag="Y0" Text="{Binding Y0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="10">
-                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="X0 = "></TextBlock>
-                                <TextBox Style="{StaticResource DefaultTextBox}" Text="{Binding X0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="Y0 = "></TextBlock>
-                                <TextBox Style="{StaticResource DefaultTextBox}" Text="{Binding Y0String, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="10">
-                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="Xn ="></TextBlock>
-                                <TextBox Style="{StaticResource DefaultTextBox}" Text="{Binding LimitString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                                <TextBlock Style="{StaticResource DefaultTextBlock}" Text="H ="></TextBlock>
-                                <TextBox Style="{StaticResource DefaultTextBox}"
-                                         Text="{Binding HString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <TextBox Style="{StaticResource DefaultTextBox}" Tag="Xn" Text="{Binding LimitString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <TextBox Style="{StaticResource DefaultTextBox}" Tag="h" Text="{Binding HString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                Margin="10">
+                    <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
                         <Button Content="Press it to magic" FontSize="16" Command="{Binding Magic}" Padding="10"></Button>
-                        <CheckBox IsChecked="{Binding IsAuto, Mode=OneWayToSource}" Margin="0 5 0 0"
-                                  HorizontalAlignment="Center" VerticalAlignment="Center"
-                                  Content="Is Auto"></CheckBox>
+                        <CheckBox IsChecked="{Binding IsAuto, Mode=OneWayToSource}" Margin="0 5 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Is Auto"></CheckBox>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -62,27 +45,21 @@
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"
-                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding IntegralDots, Mode=OneWay}"
-                                  VerticalContentAlignment="Center">
+                        <DataGrid Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding IntegralDots, Mode=OneWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="X" Binding="{Binding Path=Item1, Mode=OneWay}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Y" Binding="{Binding Path=Item2, Mode=OneWay}"></DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"
-                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding ExactDots, Mode=OneWay}"
-                                  VerticalContentAlignment="Center">
+                        <DataGrid Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding ExactDots, Mode=OneWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="X" Binding="{Binding Path=Item1, Mode=OneWay}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Y" Binding="{Binding Path=Item2, Mode=OneWay}"></DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"
-                                  IsReadOnly="False" Margin="10" ItemsSource="{Binding ErrorDots, Mode=OneWay}"
-                                  VerticalContentAlignment="Center">
+                        <DataGrid Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding ErrorDots, Mode=OneWay}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="X" Binding="{Binding Path=Item1, Mode=OneWay}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Error" Binding="{Binding Path=Item2, Mode=OneWay}"></DataGridTextColumn>
