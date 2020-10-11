@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using org.mariuszgromada.math.mxparser;
 using OxyPlot;
 using OxyPlot.Series;

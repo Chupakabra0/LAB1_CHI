@@ -6,7 +6,8 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:vm="clr-namespace:WpfApp1.VM"
         mc:Ignorable="d" Title="Runge-Kutta's method"
-        Height="600" Width="1100">
+        Height="600" Width="1100"
+        Icon="Resources/Icons/abacus.png">
 
     <Window.DataContext>
         <vm:WindowVM></vm:WindowVM>
@@ -14,7 +15,7 @@
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <TabControl>
-            <TabItem Header="Graphic" IsSelected="True">
+            <TabItem Header="Graphic" FontFamily="{StaticResource MuktaRegular}" IsSelected="True">
                 <Grid Margin="10" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -44,10 +45,12 @@
                     </StackPanel>
 
                     <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10, 30">
-                        <Button Content="{Binding ButtonString, Mode=OneWay}" FontSize="16" Command="{Binding MagicAsyncCommand}" Padding="10"></Button>
+                        <Button Content="{Binding ButtonString, Mode=OneWay}" FontFamily="{StaticResource MuktaSemiBold}" FontSize="16"
+                                Command="{Binding MagicAsyncCommand}" Padding="10"></Button>
                         <CheckBox IsChecked="{Binding IsAuto, Mode=OneWayToSource}" Margin="0 5 0 0"
                                   HorizontalAlignment="Center" VerticalAlignment="Center"
-                                  Content="Is Auto" FontSize="14"></CheckBox>
+                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                  Content="Is Auto" FontFamily="{StaticResource MuktaLight}" FontSize="15"></CheckBox>
                     </StackPanel>
                 </Grid>
             </TabItem>
