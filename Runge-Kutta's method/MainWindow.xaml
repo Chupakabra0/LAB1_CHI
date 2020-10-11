@@ -6,8 +6,7 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:vm="clr-namespace:RKMApp.VM"
         mc:Ignorable="d" Title="Runge-Kutta's method"
-        Height="606" Width="1100"
-        Icon="Resources/Icons/abacus.png">
+        Height="606" Width="1100">
 
     <Window.DataContext>
         <vm:WindowVM></vm:WindowVM>
