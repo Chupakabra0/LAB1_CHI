@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel.Dispatcher;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp1.Basic {
+namespace RKMApp.Basic {
     public static class TaskUtilities {
 #pragma warning disable RECS0165 // Asynchronous methods should return a Task instead of void
         public static async void FireAndForgetSafeAsync(this Task task, IErrorHandler handler = null)

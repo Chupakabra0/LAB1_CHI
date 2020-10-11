@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WpfApp1.Logic
+namespace RKMApp.Logic
 {
     public class ErrorBuilder {
         public ErrorBuilder(List<Tuple<double, double>> firstFunction, List<Tuple<double, double>> secondFunction) {

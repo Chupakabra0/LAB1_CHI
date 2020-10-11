@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:oxy="http://oxyplot.org/wpf"
-        xmlns:vm="clr-namespace:WpfApp1.VM"
+        xmlns:vm="clr-namespace:RKMApp.VM"
         mc:Ignorable="d" Title="Runge-Kutta's method"
         Height="606" Width="1100"
         Icon="Resources/Icons/abacus.png">

@@ -4,16 +4,15 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using org.mariuszgromada.math.mxparser;
 using OxyPlot;
 using OxyPlot.Series;
-using WpfApp1.Basic;
-using WpfApp1.Logic;
+using RKMApp.Basic;
+using RKMApp.Logic;
 
 using Expression = org.mariuszgromada.math.mxparser.Expression;
 
-namespace WpfApp1.VM {
+namespace RKMApp.VM {
     public class WindowVM : BaseVM {
         public WindowVM() => this.MagicAsyncCommand = new AsyncCommand(async () => {
             try {

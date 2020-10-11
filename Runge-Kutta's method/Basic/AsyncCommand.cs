@@ -3,7 +3,7 @@ using System.ServiceModel.Dispatcher;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WpfApp1.Basic {
+namespace RKMApp.Basic {
     public interface IAsyncCommand : ICommand {
         public Task ExecuteAsync();
         public bool CanExecute();

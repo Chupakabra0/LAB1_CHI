@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WpfApp1.Logic {
+namespace RKMApp.Logic {
     public class RK3 {
         public RK3(double x, double y, double limit, double h, Func<double, double, double> function) {
             this.Function = function;

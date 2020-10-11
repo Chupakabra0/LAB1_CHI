@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace WpfApp1.Basic {
+namespace RKMApp.Basic {
     public class RelayCommand : ICommand {
 
         public RelayCommand(Action<object> function, Func<object, bool> canExecute = null) {

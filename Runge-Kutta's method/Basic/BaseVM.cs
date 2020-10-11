@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using PropertyChanged;
 using WpfApp1.Annotations;
 
-namespace WpfApp1.Basic {
+namespace RKMApp.Basic {
     [AddINotifyPropertyChangedInterface]
     public abstract class BaseVM : INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;

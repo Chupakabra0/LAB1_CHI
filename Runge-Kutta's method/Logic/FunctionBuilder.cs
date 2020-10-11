@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace WpfApp1.Logic {
+namespace RKMApp.Logic {
     public class FunctionBuilder {
 
         public FunctionBuilder(double x0, double xn, double y0, double yn, double h, string functionString) {
