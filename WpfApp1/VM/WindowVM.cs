@@ -2,9 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using org.mariuszgromada.math.mxparser;
 using OxyPlot;
 using OxyPlot.Series;
@@ -15,29 +14,43 @@ using Expression = org.mariuszgromada.math.mxparser.Expression;
 
 namespace WpfApp1.VM {
     public class WindowVM : BaseVM {
-        public WindowVM() {}
-        public ICommand Magic =>
-            new RelayCommand(obj => {
-                try {
-                    if (!this.Function.checkSyntax()) throw new Exception("F(x, y) syntax fail.");
-                    if (CheckSyntax.IsDouble(this.HString)) throw new Exception("h syntax fail");
-                    if (CheckSyntax.IsDouble(this.X0String)) throw new Exception("X0 syntax fail");
-                    if (CheckSyntax.IsDouble(this.XnString)) throw new Exception("Xn syntax fail");
-                    if (CheckSyntax.IsDouble(this.Y0String)) throw new Exception("Y0 syntax fail");
-                    if (this.H == 0.0) throw new Exception("h can't be equal to 0.");
-                    this.IntegralDots = CreateIntegralTuples();
-                    this.ExactDots    = CreateExactTuples();
-                    this.ErrorDots    = CreateErrorTuples();
-                    this.Model.Series.Clear();
-                    this.Model.Series.Add(LineCreator.CreateLine(this.IntegralDots, OxyColor.FromRgb(0, 0, 255), "RK3"));
-                    this.Model.Series.Add(LineCreator.CreateLine(this.ExactDots,    OxyColor.FromRgb(255, 0, 0), "RK4"));
-                    this.Model.InvalidatePlot(true);
-                    this.TableVisibility = Visibility.Visible;
-                }
-                catch (Exception exception) {
-                    MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
-                }
-            });
+        public WindowVM() => this.MagicAsyncCommand = new AsyncCommand(async () => {
+            try {
+                this.IsMagicBusy = true;
+                await Task.Run(() => {
+                    var temp = this.ButtonString;
+                    try {
+                        this.ButtonString = "Checking input data";
+                        if (!this.Function.checkSyntax()) throw new Exception("F(x, y) syntax fail.");
+                        if (CheckSyntax.IsDouble(this.HString)) throw new Exception("h syntax fail");
+                        if (CheckSyntax.IsDouble(this.X0String)) throw new Exception("X0 syntax fail");
+                        if (CheckSyntax.IsDouble(this.XnString)) throw new Exception("Xn syntax fail");
+                        if (CheckSyntax.IsDouble(this.Y0String)) throw new Exception("Y0 syntax fail");
+                        if (this.H == 0.0) throw new Exception("h can't be equal to 0.");
+                        this.ButtonString = "Counting solutions";
+                        this.IntegralDots = CreateIntegralTuples();
+                        this.ExactDots    = CreateExactTuples();
+                        this.ButtonString = "Counting error";
+                        this.ErrorDots    = CreateErrorTuples();
+                        this.ButtonString = "Building graphic";
+                        this.Model.Series.Clear();
+                        this.Model.Series.Add(LineCreator.CreateLine(this.IntegralDots, OxyColor.FromRgb(0, 0, 255), "RK3"));
+                        this.Model.Series.Add(LineCreator.CreateLine(this.ExactDots, OxyColor.FromRgb(255, 0, 0), "RK4"));
+                        this.Model.InvalidatePlot(true);
+                        this.TableVisibility = Visibility.Visible;
+                    }
+                    catch (Exception exception) {
+                        MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                    }
+                    finally {
+                        this.ButtonString = temp;
+                    }
+                });
+            }
+            finally {
+                this.IsMagicBusy = false;
+            }
+        },  () => !this.IsMagicBusy);
 
         public PlotModel  Model           { get; set; } = new PlotModel { Title = "Lab #1", Subtitle = "Runge-Kutta's method", Series = { new AreaSeries() } };
         public Visibility TableVisibility { get; set; } = Visibility.Collapsed;
@@ -48,9 +61,16 @@ namespace WpfApp1.VM {
         public string     X0String        { get; set; } = string.Empty;
         public string     Y0String        { get; set; } = string.Empty;
 
+        public string     ButtonString    { get; set; } = "Press it to magic";
+
         public ObservableCollection<Tuple<double, double>> ErrorDots    { get; set; }
         public ObservableCollection<Tuple<double, double>> IntegralDots { get; set; }
         public ObservableCollection<Tuple<double, double>> ExactDots    { get; set; }
+
+        // ReSharper disable once RedundantDefaultMemberInitializer
+        public bool IsMagicBusy { get; private set; } = false;
+
+        public IAsyncCommand MagicAsyncCommand { get; }
 
         private Function Function => new Function($"F(x, y) = {this.FunctionString}");
 
