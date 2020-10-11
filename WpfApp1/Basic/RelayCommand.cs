@@ -13,7 +13,10 @@ namespace WpfApp1.Basic {
 
         public void Execute(object parameter) => this.function(parameter);
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged {
+            add => CommandManager.RequerySuggested    += value;
+            remove => CommandManager.RequerySuggested -= value;
+        }
 
         protected Func<object, bool> canExecute;
         protected Action<object> function;

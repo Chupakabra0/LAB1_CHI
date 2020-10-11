@@ -5,8 +5,8 @@ using System.Windows.Input;
 
 namespace WpfApp1.Basic {
     public interface IAsyncCommand : ICommand {
-        Task ExecuteAsync();
-        bool CanExecute();
+        public Task ExecuteAsync();
+        public bool CanExecute();
     }
 
     public class AsyncCommand : IAsyncCommand {
@@ -25,11 +25,11 @@ namespace WpfApp1.Basic {
         public async Task ExecuteAsync() {
             if (this.CanExecute()) {
                 try {
-                    this.isExecuting = true;
+                    this.IsExecuting = true;
                     await this.execute();
                 }
                 finally {
-                    this.isExecuting = false;
+                    this.IsExecuting = false;
                 }
             }
 
@@ -41,11 +41,17 @@ namespace WpfApp1.Basic {
         }
 
         bool ICommand.CanExecute(object parameter) => this.CanExecute();
-        
+        void ICommand.Execute(object parameter)    => this.ExecuteAsync().FireAndForgetSafeAsync(this.errorHandler);
 
-        void ICommand.Execute(object parameter) => this.ExecuteAsync().FireAndForgetSafeAsync(this.errorHandler);
-
-        private          bool          isExecuting;
+        private bool isExecuting;
+        public bool IsExecuting {
+            get => this.isExecuting;
+            set {
+                if (value == this.isExecuting) return;
+                this.isExecuting = value;
+                this.CanExecuteChanged?.Invoke(this, new EventArgs());
+            }
+        }
         private readonly Func<Task>    execute;
         private readonly Func<bool>    canExecute;
         private readonly IErrorHandler errorHandler;
