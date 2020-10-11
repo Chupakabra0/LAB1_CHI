@@ -17,6 +17,7 @@
 
     <!--Style for app's TextBoxes-->
     <Style TargetType="TextBox" x:Key="DefaultTextBox">
+        <Setter Property="FontFamily" Value="{StaticResource MuktaRegular}"></Setter>
         <Setter Property="FontSize" Value="18"></Setter>
         <Setter Property="MinWidth" Value="50"></Setter>
         <Setter Property="Margin" Value="5, 0"></Setter>
@@ -29,13 +30,15 @@
                 <ControlTemplate TargetType="TextBox">
                     <StackPanel Orientation="Horizontal" Margin="{TemplateBinding Margin}">
                         <TextBlock Text="{TemplateBinding Tag}" Style="{StaticResource DefaultTextBlock}"
-                                   FontSize="{TemplateBinding FontSize}" Margin="5, 0"></TextBlock>
+                                   FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}"
+                                   Margin="5, 0"></TextBlock>
                         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
                                 SnapsToDevicePixels="True">
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="False"
                                           HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
-                                          FontSize="{TemplateBinding FontSize}" Padding="{TemplateBinding Padding}"
+                                          FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}"
+                                          Padding="{TemplateBinding Padding}"
                                           HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalAlignment}"
                                           MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}"/>
                         </Border>
@@ -46,6 +49,7 @@
     </Style>
 
     <Style TargetType="DataGrid" x:Key="DefaultDataGrid">
+        <Setter Property="FontFamily" Value="{StaticResource MuktaRegular}"></Setter>
         <Setter Property="AutoGenerateColumns" Value="False"></Setter>
         <Setter Property="CanUserAddRows" Value="False"></Setter>
         <Setter Property="CanUserDeleteRows" Value="False"></Setter>

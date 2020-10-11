@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <FontFamily x:Key="MuktaBold">pack://application:,,,/Resources/Fonts/#Mukta Bold</FontFamily>
+    <FontFamily x:Key="MuktaExtraBold">pack://application:,,,/Resources/Fonts/#Mukta ExtraBold</FontFamily>
+    <FontFamily x:Key="MuktaExtraLight">pack://application:,,,/Resources/Fonts/#Mukta ExtraLight</FontFamily>
+    <FontFamily x:Key="MuktaLight">pack://application:,,,/Resources/Fonts/#Mukta Light</FontFamily>
+    <FontFamily x:Key="MuktaMedium">pack://application:,,,/Resources/Fonts/#Mukta Medium</FontFamily>
+    <FontFamily x:Key="MuktaRegular">pack://application:,,,/Resources/Fonts/#Mukta Regular</FontFamily>
+    <FontFamily x:Key="MuktaSemiBold">pack://application:,,,/Resources/Fonts/#Mukta SemiBold</FontFamily>
+</ResourceDictionary>
