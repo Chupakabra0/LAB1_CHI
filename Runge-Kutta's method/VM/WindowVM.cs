@@ -21,11 +21,11 @@ namespace RKMApp.VM {
                     var temp = this.ButtonString;
                     try {
                         this.ButtonString = "Checking input data";
-                        if (CheckSyntax.IsDouble(this.FunctionString) || !this.Function.checkSyntax()) throw new Exception("F(x, y) syntax fail.");
-                        if (CheckSyntax.IsDouble(this.HString)) throw new Exception("h syntax fail");
+                        if (string.Empty.Equals(this.FunctionString) || !this.Function.checkSyntax()) throw new Exception("F(x, y) syntax fail.");
                         if (CheckSyntax.IsDouble(this.X0String)) throw new Exception("X0 syntax fail");
-                        if (CheckSyntax.IsDouble(this.XnString)) throw new Exception("Xn syntax fail");
                         if (CheckSyntax.IsDouble(this.Y0String)) throw new Exception("Y0 syntax fail");
+                        if (CheckSyntax.IsDouble(this.XnString)) throw new Exception("Xn syntax fail");
+                        if (CheckSyntax.IsDouble(this.HString)) throw new Exception("h syntax fail");
                         if (this.H == 0.0) throw new Exception("h can't be equal to 0.");
                         this.ButtonString = "Counting solutions";
                         this.IntegralDots = CreateIntegralTuples();
@@ -81,10 +81,10 @@ namespace RKMApp.VM {
         private double X0  => Convert.ToDouble(this.X0String, CultureInfo.InvariantCulture);
         private double Y0  => Convert.ToDouble(this.Y0String, CultureInfo.InvariantCulture);
 
-        private ObservableCollection<Tuple<double, double>> CreateErrorTuples()    => new ObservableCollection<Tuple<double, double>>(new ErrorBuilder(this.IntegralDots.ToList(), this.ExactDots.ToList()).Build());
+        private ObservableCollection<Tuple<double, double>> CreateErrorTuples()    => new ObservableCollection<Tuple<double, double>>(new ErrorBuilder(this.IntegralDots.ToList(), this.ExactDots.ToList()).Build().OrderBy(tuple => tuple.Item1));
 
-        private ObservableCollection<Tuple<double, double>> CreateIntegralTuples() => new ObservableCollection<Tuple<double, double>>(new RK3(this.X0, this.Y0, this.Xn, this.H, this.Func).Calculate(this.IsAuto));
+        private ObservableCollection<Tuple<double, double>> CreateIntegralTuples() => new ObservableCollection<Tuple<double, double>>(new RK3(this.X0, this.Y0, this.Xn, this.H, this.Func).Calculate(this.IsAuto).OrderBy(tuple => tuple.Item1));
         
-        private ObservableCollection<Tuple<double, double>> CreateExactTuples()    => new ObservableCollection<Tuple<double, double>>(new RK4(this.X0, this.Y0, this.Xn, this.H, this.Func).Calculate(this.IsAuto));
+        private ObservableCollection<Tuple<double, double>> CreateExactTuples()    => new ObservableCollection<Tuple<double, double>>(new RK4(this.X0, this.Y0, this.Xn, this.H, this.Func).Calculate(this.IsAuto).OrderBy(tuple => tuple.Item1));
     }
 }
