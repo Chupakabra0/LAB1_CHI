@@ -38,8 +38,8 @@ namespace RKMApp.Logic {
         public       double H     { get; set; }
         public       double Limit { get; set; }
         public const int    K        = 4;
-        public const double MAX_STEP = 1.0;
-        public const double MIN_STEP = 0.01;
+        public const double MAX_STEP = 1000.0;
+        public const double MIN_STEP = 0.0001;
 
         public List<Tuple<double, double>> Calculate(bool isAuto = false) {
             var list = new List<Tuple<double, double>>();
